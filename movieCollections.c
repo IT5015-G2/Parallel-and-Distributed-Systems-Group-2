@@ -22,6 +22,7 @@ void display(collect A);
 void sortByYear(collect A);
 void sortByTitleAscending(collect A);
 void sortByTitleDescending(collect A);
+void sortByRating(collect A,char choice);
 
 int main()
 {
@@ -56,13 +57,17 @@ int main()
 	 				default: printf("\nChoice Not found!!!");
 				 }
 		 		break;
-	 	case 2: break;
+	 	case 2: printf("A: Ascending B: Descending\n");
+	 			fflush(stdin);
+	 			scanf("%c",&order);
+		 		sortByRating(A,order);
+		 		break;
 	 	case 3: sortByYear(A);
 	 			break;
 	 	case 4: break;
 	 	case 5: n = 0;
 	 			break;
-	 	default:printf("Error! input is in correct.");
+	 	default:printf("Error! input is incorrect.");
 	 }
 	}while(n!=0);
 	
@@ -191,5 +196,42 @@ void sortByTitleDescending(collect A){
         display(A);
 	
 }
-
-
+void sortByRating(collect A,char order)
+{
+	mov movie;
+	int i,j;
+	switch(order){
+		case 'A':
+		case 'a':
+			for( i=0 ; i<A.cnt ; i++){
+				for( j=i+1 ; j<A.cnt ; j++){
+					if(A.movie[i].ratings > A.movie[j].ratings){
+						movie = A.movie[i];
+						A.movie[i] = A.movie[j];
+						A.movie[j] = movie;
+					}
+				}
+			}
+			system("cls");
+			display(A);
+			break;
+		case 'B':
+		case 'b':
+			for( i=0 ; i<A.cnt ; i++){
+				for( j=i+1 ; j < A.cnt ; j++){
+					if(A.movie[i].ratings < A.movie[j].ratings){
+						movie = A.movie[i];
+						A.movie[i] = A.movie[j];
+						A.movie[j] = movie;
+					}
+				}
+			}
+			system("cls");
+			display(A);
+			break;
+		default:
+			printf("\nEnter correct Order\n");
+			break;
+	}
+	
+}
