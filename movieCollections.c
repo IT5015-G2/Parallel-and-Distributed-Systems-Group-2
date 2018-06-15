@@ -20,11 +20,14 @@ typedef struct collections{
 void initialize(collect *A);
 void display(collect A);
 void sortByYear(collect A);
+void sortByTitleAscending(collect A);
+void sortByTitleDescending(collect A);
 
 int main()
 {
 	int option, n = 1;
 	collect A;
+	char order;
 	
 	initialize(&A);
 	
@@ -36,10 +39,23 @@ int main()
 	printf("\n3 - Sort by Year");
 	printf("\n4 - Sort by Budget");
 	printf("\n5 - Exit");
+	printf("\nEnter Choice:\n");
 	scanf("%d",&option);
 	 switch(option)
 	 {
-	 	case 1: break;
+	 	case 1: printf("A - Ascending Order  D - Descending Order\n");
+	 			fflush(stdin);
+	 			scanf("%c",&order);
+	 			switch(order){
+	 				case 'A':
+	 				case 'a':
+	 					sortByTitleAscending(A); break;
+	 				case 'D':
+	 				case 'd':
+	 					sortByTitleDescending(A); break;
+	 				default: printf("\nChoice Not found!!!");
+				 }
+		 		break;
 	 	case 2: break;
 	 	case 3: sortByYear(A);
 	 			break;
@@ -113,6 +129,54 @@ void sortByYear(collect A){
             {
  
                 if (A.movie[i].year > A.movie[j].year) 
+                {
+ 
+                    movie =  A.movie[i];
+                    A.movie[i] = A.movie[j];
+                    A.movie[j] = movie;
+ 
+                }
+ 
+            }
+ 
+        }
+        display(A);
+	
+}
+void sortByTitleAscending(collect A){
+		int i, j;
+	mov movie;
+	for (i = 0; i < A.cnt; ++i) 
+        {
+ 
+            for (j = i + 1; j < A.cnt; ++j)
+            {
+ 
+                if (strcmp(A.movie[i].title,A.movie[j].title)>0) 
+                {
+ 
+                    movie =  A.movie[i];
+                    A.movie[i] = A.movie[j];
+                    A.movie[j] = movie;
+ 
+                }
+ 
+            }
+ 
+        }
+        display(A);
+	
+}
+void sortByTitleDescending(collect A){
+		int i, j;
+	mov movie;
+	for (i = 0; i < A.cnt; ++i) 
+        {
+ 
+            for (j = i + 1; j < A.cnt; ++j)
+            {
+ 
+                if (strcmp(A.movie[i].title,A.movie[j].title)<0) 
                 {
  
                     movie =  A.movie[i];
