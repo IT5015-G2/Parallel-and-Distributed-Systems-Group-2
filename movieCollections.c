@@ -23,6 +23,7 @@ void sortByYear(collect A);
 void sortByTitleAscending(collect A);
 void sortByTitleDescending(collect A);
 void sortByRating(collect A,char choice);
+void sortByBudget(collect A, int order);
 
 int main()
 {
@@ -64,7 +65,10 @@ int main()
 		 		break;
 	 	case 3: sortByYear(A);
 	 			break;
-	 	case 4: break;
+	 	case 4: printf("(0) - Ascending Order  (1) - Descending Order\n");
+	 			fflush(stdin);
+	 			scanf("%d",&option);
+		 		sortByBudget(A, option); break;
 	 	case 5: n = 0;
 	 			break;
 	 	default:printf("Error! input is incorrect.");
@@ -123,6 +127,41 @@ void initialize(collect *A)
 	
 	
 	//INSERT CODE FOR AUTO GENERATE DATA INPUTS
+}
+
+void sortByBudget(collect A, int order)
+{
+	int x,y;
+	mov temp;
+	if(order == 0){
+		for(x=0;x < A.cnt;x++){
+			for(y=0;y < A.cnt && A.movie[x].budget > A.movie[y].budget;y++){}
+			while(y < x){
+				if(A.movie[x].budget < A.movie[y].budget){
+					temp = A.movie[y];
+					A.movie[y] = A.movie[x];
+					A.movie[x] = temp;
+				}
+				y++;
+			}
+		}
+		display(A);
+	}else if(order == 1){
+			for(x=0;x < A.cnt;x++){
+				for(y=0;y < A.cnt && A.movie[x].budget < A.movie[y].budget;y++){}
+				while(y < x){
+					if(A.movie[x].budget > A.movie[y].budget){
+						temp = A.movie[y];
+						A.movie[y] = A.movie[x];
+						A.movie[x] = temp;
+					}
+					y++;
+				}
+			}
+			display(A);
+	}else{
+		printf("\n\nValue entered is not in the list");
+	}
 }
 void sortByYear(collect A){
 		int i, j;
