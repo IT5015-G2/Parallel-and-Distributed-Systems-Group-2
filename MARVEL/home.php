@@ -82,8 +82,8 @@
 			echo "<td>{$data['movie_Budget']}</td>";
 			echo "<td>{$data['movie_Year']}</td>";
 			echo "<td><button class='btn btn-warning btn-md' id='EditMovie'><span class='glyphicon glyphicon-search'>Edit</span></button> ";
-			echo " <button class='btn btn-danger btn-md'><span class='glyphicon glyphicon-remove'>Delete
-				 </span></button></td>";
+			echo " <a href='delete.php?id={$data['movie_ID']}'><button class='btn btn-danger btn-md' ><span class='glyphicon glyphicon-remove'>Delete
+				 </span></button></td></a>";
 			echo "</tr>";	
 		}
 	?>
