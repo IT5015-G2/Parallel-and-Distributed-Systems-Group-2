@@ -13,34 +13,6 @@
 	<link rel='stylesheet' href='css/bootstrap.min.css'>
 <body>
 	<h2 style="text-align: center;">MARVEL MOVIES</h2>
-<div class="container">
-<div class="row">
-<div class='col-md-10 '> 
-<table id='movieTable' class="table table-hover table-bordered" width="85%">
-	<thead>
-		<th>Title</th>
-		<th>Rating</th>
-		<th>Budget</th>
-		<th>Year released</th>s
-		<th>Edit</th>
-		<th>Delete</th>
-	</thead>
-	<tbody>
-	<?php
-		while($data = mysqli_fetch_assoc($result)){
-			echo "<tr>";
-			echo "<td>{$data['movie_Title']}</td>";
-			echo "<td>{$data['movie_Rating']}</td>";
-			echo "<td>{$data['movie_Budget']}</td>";
-			echo "<td>{$data['movie_Year']}</td>";
-			echo "<td><button class='btn btn-warning btn-md'><span class='glyphicon glyphicon-search'></span></button></td>";
-			echo "<td><button class='btn btn-danger btn-md'><span class='glyphicon glyphicon-remove'>
-				 </span></button></td>";
-			echo "</tr>";	
-		}
-	?>
-	</tbody>
-</table>
 <button class="btn btn-default" id="addMovie">Add Movie</button>
 </div>
 </div>
@@ -87,6 +59,36 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+    <div class="container">
+        
+<div class="row">
+<div class='col-md-10 '> 
+    
+<table id='movieTable' class="table table-hover table-bordered" width="85%">
+	<thead>
+		<th>Title</th>
+		<th>Rating</th>
+		<th>Budget</th>
+		<th>Year released</th>
+		<th>Options</th>
+	</thead>
+	<tbody>
+	<?php
+		while($data = mysqli_fetch_assoc($result)){
+			echo "<tr>";
+			echo "<td>{$data['movie_Title']}</td>";
+			echo "<td>{$data['movie_Rating']}</td>";
+			echo "<td>{$data['movie_Budget']}</td>";
+			echo "<td>{$data['movie_Year']}</td>";
+			echo "<td><button class='btn btn-warning btn-md' id='EditMovie'><span class='glyphicon glyphicon-search'>Edit</span></button> ";
+			echo " <button class='btn btn-danger btn-md'><span class='glyphicon glyphicon-remove'>Delete
+				 </span></button></td>";
+			echo "</tr>";	
+		}
+	?>
+	</tbody>
+</table>
 
 
 
