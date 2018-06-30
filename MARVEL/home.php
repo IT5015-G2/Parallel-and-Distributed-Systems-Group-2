@@ -55,6 +55,7 @@
       </div>
       <div class="modal-footer">
         
+        
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -64,7 +65,7 @@
         
 <div class="row">
 <div class='col-md-10 '> 
-    
+ 
 <table id='movieTable' class="table table-hover table-bordered" width="85%">
 	<thead>
 		<th>Title</th>
@@ -81,7 +82,7 @@
 			echo "<td>{$data['movie_Rating']}</td>";
 			echo "<td>{$data['movie_Budget']}</td>";
 			echo "<td>{$data['movie_Year']}</td>";
-			echo "<td><button class='btn btn-warning btn-md' id='EditMovie'><span class='glyphicon glyphicon-search'>Edit</span></button> ";
+			echo "<td><a href='Edit.php? id={$data['movie_ID']}'><button class='btn btn-warning btn-md' id='EditMovie' name ><span class='glyphicon glyphicon-search'>Edit</span></button> ";
 			echo " <a href='delete.php?id={$data['movie_ID']}'><button class='btn btn-danger btn-md' ><span class='glyphicon glyphicon-remove'>Delete
 				 </span></button></td></a>";
 			echo "</tr>";	
@@ -89,7 +90,51 @@
 	?>
 	</tbody>
 </table>
+     
+ <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+           <?php
 
+	
+        $res =mysqli_query($conn, "SELECT * FROM marvel
+                                     WHERE movie_id =17");
+        $data = mysqli_fetch_array($res);
+
+            ?>
+          <form method ='POST' action= 'Update.php' enctype="multipart/form-data">
+                    <input type = 'text' value = '<?php echo $data[0]; ?>' name='id' class='hide' placeholder='id'>
+                    <br>
+                    <p>Movie Title</p>
+                    <input type = 'text' value = '<?php echo $data['movie_Title']; ?>' name='title' class='form-control'>
+                    <br>
+                    <p>Movie Rating</p>
+                    <input type = 'text' value = '<?php echo $data['movie_Rating']; ?>' name='rating' class='form-control'>
+                    <br>
+                    <p>Year Released</p>
+                    <input type = 'text' value ='<?php echo $data['movie_Year']; ?>' name='year' class='form-control'>
+                    <br>
+                    <p>Budget</p>
+                    <input type = 'text' value ='<?php echo $data['movie_Budget']; ?>' name='budget' class='form-control'>
+                    <br>
+                    <button class = 'btn btn-success pull-right'>SUBMIT</button>
+                    <br>
+                </form>
+        </div>
+        <div class="modal-footer">
+         
+        </div>
+      </div>
+      
+    </div>
+  </div>  
 
 
 </body>
