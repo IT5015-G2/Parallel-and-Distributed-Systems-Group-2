@@ -244,13 +244,12 @@
 				?>
 				
 			  </div>
-
-			  <div class="item">
-				<?php
-					$result = mysqli_query($conn,"SELECT * FROM movies WHERE movie_id = '2' limit 1");
-					$row = mysqli_fetch_array($result);
-					echo "<img src='temps/uploads/".$row['movie_pic']."' alt='Photography' style='width:100%;height:100%'>";
-					echo "<div class='carousel-caption'>";
+			 	<?php
+			 	$result = mysqli_query($conn,"SELECT * FROM movies ORDER BY movie_rating DESC limit 2 offset 1");
+				while($row = mysqli_fetch_array($result)){
+					echo "<div class='item'>";
+						echo "<img src='temps/uploads/".$row['movie_pic']."' alt='Photography' style='width:100%;height:100%'>";
+						echo "<div class='carousel-caption'>";
 						echo "<h6>Painting</h6>";
 					echo "</div>";
 			  		echo "</div>";
