@@ -235,7 +235,7 @@
 
 			  <div class="item active">
 				<?php
-					$result = mysqli_query($conn,"SELECT * FROM movies WHERE movie_id = '1' limit 1");
+					$result = mysqli_query($conn,"SELECT * FROM movies ORDER BY movie_rating DESC limit 1");
 					$row = mysqli_fetch_array($result);
 					echo "<img src='temps/uploads/".$row['movie_pic']."' alt='Photography' style='width:100%;height:100%'>";
 					echo "<div class='carousel-caption'>";
@@ -253,20 +253,10 @@
 					echo "<div class='carousel-caption'>";
 						echo "<h6>Painting</h6>";
 					echo "</div>";
-				?>
-			  </div>
-			
-			  <div class="item">
-				<?php
-					$result = mysqli_query($conn,"SELECT * FROM movies WHERE movie_id = '3' limit 1");
-					while ($row = mysqli_fetch_array($result)){
-					echo "<img src='temps/uploads/".$row['movie_pic']."' alt='Architecture' style='width:100%;height:100%'>";
-					echo "<div class='carousel-caption'>";
-						echo "<h6>Architecture</h6>";
-					echo "</div>";
-					}
-				?>
-			  </div>
+			  		echo "</div>";
+				}
+			  	
+			?>
 		  
 			</div>
 
