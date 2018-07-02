@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2018 at 03:18 AM
+-- Generation Time: Jul 02, 2018 at 03:26 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -43,8 +43,8 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`movie_id`, `movie_title`, `movie_pic`, `movie_rating`, `movie_description`, `movie_budget`, `movie_box_office`) VALUES
-(1, 'Oregairu', 'movieupload1.png', 10, 'Oregairu is an anime.', 1000000, 50000000),
-(2, 'Witcher The movie', 'movieupload2.jpg', 10, 'Witcher gmae movie', 123124000, 124124000),
+(1, 'Oregairu', 'movieupload1.png', 9, 'Oregairu is an anime.', 1000000, 50000000),
+(2, 'Witcher The movie', 'movieupload2.jpg', 9, 'Witcher gmae movie', 123124000, 124124000),
 (3, 'The Witcer 4 2023', 'am0D10Gz_700w_0.jpg.jpg', 10, 'The fourht witcher insstalment dasdasdasd', 2000000, 25000000000);
 
 --
