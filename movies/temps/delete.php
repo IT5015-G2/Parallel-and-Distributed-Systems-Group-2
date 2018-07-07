@@ -1,16 +1,10 @@
 <?php
-	session_start();
-$dbServername = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName = "login";
 
+if(isset($_POST['submit'])){
+	$conn = mysqli_connect("localhost", "root", "", "movies");
 
-
-$imgid = $_GET['imgid'];
-$conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
-$result1=mysqli_query($conn,"DELETE FROM image_comments WHERE img_id_fk = '$imgid'");
-
-$result=mysqli_query($conn,"DELETE FROM imageuploads WHERE img_id='$imgid'");
-header("Location: ../profile.php");
+	$title = $_POST['title'];
+	$result1=mysqli_query($conn,"DELETE FROM movies WHERE movie_title = '$title'");
+	header("Location: ../marvelmovies.php");
+}
 

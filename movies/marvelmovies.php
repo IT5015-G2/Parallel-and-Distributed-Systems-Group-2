@@ -13,6 +13,14 @@
 	<script src = "scripts/jquery-3.2.1.js"></script>
 	 <style>
 		body{
+						background-image: url(img/backgrounds/marvelbackground.png);
+
+			min-height:100%;
+
+			background-attachment: fixed;
+			background-position: fixed;
+			background-repeat:no-repeat;
+			background-size: cover;
 		}
 		.navbar{
 			margin-left:50%;
@@ -36,8 +44,8 @@
 			margin-top:100px;
 		}
 		.topmost{
-			background-color:black;
-			opacity:1.0;
+			background-color: black;
+			opacity:0.8;
 			height:20%;
 		}
 		#signin{
@@ -54,18 +62,6 @@
 			font-size:80px;
 			font-family:"roboto";
 		}
-		#profil{
-			color:white;
-			text-decoration:none;
-		}
-		#welcomeuser{
-			margin-top:50px;
-			margin-left:50px;
-			float:left;
-			color:white;
-			font-family:"roboto";
-			font-size:20px;
-		}
 		#menu{
 			text-decoration:none;
 			color:white;
@@ -77,9 +73,24 @@
 			margin-top:100px;
 			font-size:100px;
 		}
-		#sharepar{
-			font-family:"ffdin";
+		#movie_title{
+			font-family:"roboto";
+			margin-top:100px;
+			font-size:50px;
+			text-decoration: none;
+			color:white;
+		}
+		#movie_rating{
+			font-family:"roboto";
 			font-size:20px;
+		}
+		#movie_description{
+			font-family:"roboto";
+			width:90%;
+			height:150px;
+			font-size:20px;
+			overflow:hidden;
+			text-overflow:ellipsis;
 		}
 		.overlay {
 		  position: absolute;
@@ -107,11 +118,6 @@
 		  -ms-transform: translate(-50%, -50%);
 		}
 		.box{
-			margin-top:100px;
-			margin-left:100px;
-			padding:0;
-			height:300px;
-			width:600px;
 		}
 		.modal-content{
 			-webkit-border-radius: 0px;
@@ -206,23 +212,23 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12 topmost">
-			<div class="col-lg-8">
-				<h1 id="headtitle">Movie Reviews<a href="artsy.php" id="menu">Home</a><a href="#" id="menu">About</a><a href="artworks.php" id="menu">Artworks</a><a href="search.php" id="menu" class="">Search</a></h1>
-			</div>
-			<div class="col-lg-4">
-					<div class='sign'>
-					<a href='#' class='dropdown-toggle' id='signin' data-toggle='modal' data-target='#uploadModal'>Add Movie</a>
-					<a href='#' class='dropdown-toggle' id='signin' data-toggle='modal' data-target='#myModal'>Rate Movie</a>
-					</div>
+			<div class="col-lg-12">
+				<img src = "img/backgrounds/marvel-logo.png" style = "width: 40%;height:100%">
+				<h1 id="headtitle" style="display:inline-block"><a href="marvelmovies.php" id="menu">|Home</a><a href='#' class='dropdown-toggle' id='menu' data-toggle='modal' data-target='#deleteModal'>|Delete Movie</a><a href="movies.php" id="menu">|Movies</a><a href="search.php" id="menu" class="">|Search</a><a href='#' class='dropdown-toggle' id='menu' data-toggle='modal' data-target='#uploadModal'>|Add Movie</a><a href='#' class='dropdown-toggle' id='menu' data-toggle='modal' data-target='#updateModal'>|Update Movie</a></h1>
 			</div>
 			
 		</div>
 	</div>
 </div>   
-    
+<div class="container">
+	<div class="row">
+		<h1 id = 'share' style="background-color:black;opacity:0.9;color:white">H<small style = "color:white">ighest Rated Movies</small></h1>
+	</div>
+	<hr>
+</div>
 <div class="container" id="sharediv" style="display:block">
 	<div class="row">
-		  <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height:300px;width:100%">
+		  <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height:400px;width:100%">
 			<!-- Indicators -->
 			<ol class="carousel-indicators">
 			  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -237,9 +243,9 @@
 				<?php
 					$result = mysqli_query($conn,"SELECT * FROM movies ORDER BY movie_rating DESC limit 1");
 					$row = mysqli_fetch_array($result);
-					echo "<img src='temps/uploads/".$row['movie_pic']."' alt='Photography' style='width:100%;height:100%'>";
+					echo "<img src='temps/uploads/".$row['movie_wide_pic']."' alt='Photography' style='width:100%;height:100%'>";
 					echo "<div class='carousel-caption'>";
-						echo "<h6>Photography</h6>";
+						echo "<h6>".$row['movie_title']."</h6>";
 					echo "</div>";
 				?>
 				
@@ -248,9 +254,9 @@
 			 	$result = mysqli_query($conn,"SELECT * FROM movies ORDER BY movie_rating DESC limit 2 offset 1");
 				while($row = mysqli_fetch_array($result)){
 					echo "<div class='item'>";
-						echo "<img src='temps/uploads/".$row['movie_pic']."' alt='Photography' style='width:100%;height:100%'>";
+						echo "<img src='temps/uploads/".$row['movie_wide_pic']."' alt='".$row['movie_title']."' style='width:100%;height:100%;'>";
 						echo "<div class='carousel-caption'>";
-						echo "<h6>Painting</h6>";
+						echo "<h6>".$row['movie_title']."</h6>";
 					echo "</div>";
 			  		echo "</div>";
 				}
@@ -270,57 +276,37 @@
 			</a>
 		  </div>       
 	</div>
-<div> 
-<!--Sign up form -->
-<div id="myModal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-		<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Registration</h4>
-				</div>
-				<div class="modal-body">
-					<form class="signup-form" action="backgroundincludes/signup.inc.php" method="POST">
-						<input class="signup-text" type="text" name="first" placeholder = "First Name"><br><br>
-						<input class="signup-text" type="text" name="last" placeholder = "Last Name"><br><br>
-						<input class="signup-text" type="text" name="email" placeholder = "E-mail"><br><br>
-						<input class="signup-text" type="text" name="uid" placeholder = "Username"><br><br>
-						<input class="signup-text" type="password" name="pass" placeholder = "Password"><br><br>
-						<button class = "signup" type="submit" name="submit">Sign Up</button>
-					</form>
-					<div class="vr">&nbsp;</div>
-				</div>
-				<div class="modal-footer">
-					<small>edasdasdasdasda</small>
-				</div>
-			</div>
-		</div>
-</div>
-	<!-- end of signup-->
-
-	<!--sign in modal-->
-<div id="myModal1" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-		<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Sign-In</h4>
-				</div>
-				<div class="modal-body">
-					<form class="signup-form" action="backgroundincludes/login.inc.php" method="POST">
-						<input class="signup-text" type="text" name="uid" placeholder = "Username"><br><br>
-						<input class="signup-text" type="password" name="pass" placeholder = "Password"><br><br>
-						<button class = "login" type="submit" name="submit">Log In</button>
-					</form>
-					<div class="vr">&nbsp;</div>
-				</div>
-				<div class="modal-footer">
-					<small>edasdasdasdasda</small>
-				</div>
-			</div>
-		</div>
+</div> 
+<div class = "container">
+	<div class = "row">
+	<h1 id = 'share' style="background-color:black;opacity:0.9;color:white">R<small style = "color:white">ecent Reviews</small></h1>
+	<hr>
+	<?php
+	$result = mysqli_query($conn,"SELECT * FROM movies ORDER BY movie_id DESC LIMIT 2");
+	while($row = mysqli_fetch_array($result)){
+		echo "<div class = 'container' style='background-color:black;color:white;opacity:0.9;height:50%'>";
+			echo "<div class = 'col-lg-4' style='margin-top:5%;'>";
+			echo "<img src='temps/uploads/".$row['movie_pic']."' style='width:350px;height:250px'>";
+			echo "</div>";
+			echo "<div class = 'col-lg-8' style='margin-top:3%;'>";
+				echo "<div class = 'row'>";
+					echo "<a href = 'moviepage.php?movie_id=".$row['movie_id']."'id='movie_title' class='box'>".$row['movie_title']."</a>";
+					echo "<small id = 'movie_rating'> (".$row['movie_year'].")</small>";
+					echo "<h5 id = 'movie_rating' style='margin-right:5%;margin-top:3%;'><b>Rating: ".$row['movie_rating']."</b></h5>";
+				echo "</div>";
+				echo "<div class = 'row'>";
+					echo "<p id='movie_description'>".$row['movie_description']."</p>";
+				echo "</div>";
+			echo "</div>";
+		echo "</div>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+	}
+	?>
+	</div>
 </div>
 <!-- Upload Modal -->
 <div id="uploadModal" class="modal fade" role="dialog">
@@ -333,8 +319,10 @@
 				</div>
 				<div class="modal-body">
 					<form action="temps/upload.php" method="POST" enctype="multipart/form-data">
-						<input type="file" name="file"><br>
+						<input type="file" name="file"><span>Profile</span><br>
+						<input type="file" name="wide_file"><span>Wide Profile</span><br>
 						<input type="text" name="title" placeholder = "Title"><br><br>
+						<input type="text" name="year" placeholder="Year"><br><br>
 						<input type="text" name="description" placeholder = "Description"><br><br>
 						<input type="text" name="budget" placeholder = "Budget Total"><br><br>
 						<input type="text" name="box_office" placeholder = "Box Office Total"><br><br>
@@ -349,10 +337,90 @@
 			</div>
 		</div>
 </div>
+<!--delete modal -->
+<div id="deleteModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+		<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Upload</h4>
+				</div>
+				<div class="modal-body">
+					<form action="temps/delete.php" method="POST" enctype="multipart/form-data">
+						<span>Choose Movie to Delete</span>
+						<input type="text" name="title" placeholder = "Title"><br><br>
+						<button type="submit" name="submit">Delete</button> 
+					</form>
+					<div class="vr">&nbsp;</div>
+				</div>
+				<div class="modal-footer">
+					<small>2018</small>
+				</div>
+			</div>
+		</div>
+</div>
+<!-- update modal -->
+<div id="updateModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+		<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Update</h4>
+				</div>
+				<div class="modal-body">
+					<form action="temps/update.php" method="POST" enctype="multipart/form-data">
+						<input type="text" name="id" placeholder="Movie ID"><span>Enter Movie ID to update</span><br><br>
+						<input type="text" name="title" placeholder = "Title"><br><br>
+						<input type="text" name="year" placeholder = "Year"><br><br>
+						<input type="text" name="budget" placeholder = "Budget Total"><br><br>
+						<input type="text" name="box_office" placeholder = "Box Office Total"><br><br>
+						<input type="text" name="rating" placeholder = "Rating"><br><br>
+						<button type="submit" name="submit">Update</button> 
+					</form>
+					<div class="vr">&nbsp;</div>
+				</div>
+				<div class="modal-footer">
+					<small>2018</small>
+				</div>
+			</div>
+		</div>
+</div>
 <script src = "scripts/bootstrap/js/bootstrap.js"></script>
 <script src = "scripts/jquery-3.2.1.min.js"></script>
 <script src = "scripts/magneticpopup/dist/jquery.magnific-popup.js"></script>
 <script src = "scripts/magneticpopup/dist/jquery.magnific-popup.min.js"></script>
+<script>
+$(document).ready(function() {
+
+	$('.box').magnificPopup({
+		type: 'ajax',
+		alignTop: true,
+		mainClass: 'mfp-fade',
+		removalDelay: 160,
+		disableOn: 700,
+      closeOnBgClick: false ,
+		overflowY: 'scroll'
+	});
+	
+});
+</script>
+<script>
+$(document).ready(function() {
+
+	$('.userbox').magnificPopup({
+		type: 'ajax',
+		alignTop: true,
+		mainClass: 'mfp-fade',
+		removalDelay: 160,
+		disableOn: 700,
+      closeOnBgClick: false ,
+		overflowY: 'scroll'
+	});
+	
+});
+</script>
 <script>
 $(function() {
 

@@ -90,11 +90,6 @@
 			overflow:hidden;
 			text-overflow:ellipsis;
 		}
-		#categori{
-			font-family:"roboto";
-			font-size:25px;
-			padding-bottom: 0px;
-		}
 		.overlay {
 		  position: absolute;
 		  top: 0;
@@ -109,8 +104,6 @@
 		}
 		.box:hover .overlay {
 		  opacity: 0.8;
-		  text-decoration: none;
-		  color:white;
 		}
 		.text {
 		  font-family:"roboto";
@@ -123,11 +116,6 @@
 		  -ms-transform: translate(-50%, -50%);
 		}
 		.box{
-			font-family: "roboto";
-			color:white;
-			text-decoration: none;
-			padding:0;
-			font-size:20px;
 		}
 		.modal-content{
 			-webkit-border-radius: 0px;
@@ -181,6 +169,41 @@
 			color: white;
 			border-color: white;
 		}
+		<!--star system css-->
+		div.stars {
+		  width: 270px;
+		  display: inline-block;
+		}
+		input.star{ 
+			display: none; 
+		}
+		label.star{
+		  float: right;
+		  padding: 10px;
+		  font-size: 36px;
+		  color: #444;
+		  transition: all .2s;
+		}
+		input.star:checked ~ label.star:before{
+		  content: '\f005';
+		  color: #FD4;
+		  transition: all .25s;
+		}
+		input.star-5:checked ~ label.star:before {
+		  color: #FE7;
+		  text-shadow: 0 0 20px #952;
+		}
+		input.star-1:checked ~ label.star:before {
+			color: #F62; 
+		}
+		label.star:hover { 
+			transform: rotate(-15deg) scale(1.3); 
+		}
+		label.star:before {
+		  content: '\f006';
+		  font-family: FontAwesome;
+		}
+		
 	 </style>
 	</head>
 <body>
@@ -189,23 +212,26 @@
 		<div class="col-lg-12 topmost">
 			<div class="col-lg-12">
 				<img src = "img/backgrounds/marvel-logo.png" style = "width: 40%;height:100%">
-				<h1 id="headtitle" style="display:inline-block"><a href="marvelmovies.php" id="menu">|Home</a><a href='#' class='dropdown-toggle' id='menu' data-toggle='modal' data-target='#deleteModal'>|Delete Movie</a><a href="movies.php" id="menu">|Movies</a><a href="search.php" id="menu" class="">|Search</a><a href='#' class='dropdown-toggle' id='menu' data-toggle='modal' data-target='#uploadModal'>|Add Movie</a><a href='#' class='dropdown-toggle' id='menu' data-toggle='modal' data-target='#uploadModal'>|Update Movie</a></h1>
+				<h1 id="headtitle" style="display:inline-block"><a href="marvelmovies.php" id="menu">|Home</a><a href='#' class='dropdown-toggle' id='menu' data-toggle='modal' data-target='#deleteModal'>|Delete Movie</a><a href="movies.php" id="menu">|Movies</a><a href="search.php" id="menu" class="">|Search</a><a href='#' class='dropdown-toggle' id='menu' data-toggle='modal' data-target='#uploadModal'>|Add Movie</a><a href='#' class='dropdown-toggle' id='menu' data-toggle='modal' data-target='#updateModal'>|Update Movie</a></h1>
 			</div>
 			
 		</div>
 	</div>
-</div> 
+</div>                            
+<div class= "container target" id="displaydiv">
+	<?php
+	$result = mysqli_query($conn,"SELECT * FROM movies ORDER BY movie_title ASC");
 
-<div class= "container target" id="displaydiv" style="background-color:black;opacity:0.9;width:50%;">
-	<div class="search">
-	<form method="post" action="search.php">
-		<span id="categori" style="color:white;">Search</span>
-		<input id="search1" type="text" name="name">
-	</form>
-	</div>	
-	<div id="searchtarget">
-	</div>
-</div>  
+	while ($row = mysqli_fetch_array($result)) {
+			echo "<div class = 'row' style='background-color:black;opacity:0.9;'>";
+			echo "<h5 id = 'movie_rating' style='float:right;margin-right:5%;margin-top:2%;'><b>Rating: ".$row['movie_rating']."</b></h5>";
+			echo "<h1 id='movie_title' style='color:white'><a href='moviepage.php?movie_id=".$row['movie_id']."' class = 'box'style='text-decoration:none;color:white'>".$row['movie_title']."</a></h1>";
+			echo "</div>";
+			
+	}
+	?>
+	
+</div>                                                   
 <div id="uploadModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 		<!-- Modal content-->
@@ -283,13 +309,32 @@
 				</div>
 			</div>
 		</div>
-</div>                                                 
-<script src = "scripts/bootstrap/js/bootstrap.min.js"></script>
-<script src = "scripts/jquery-3.2.1.min.js"></script>
+</div>
+<script src = "scripts/bootstrap/js/bootstrap.js"></script>
+<script src = "scripts/jquery-3.2.1.js"></script>
 <script src = "scripts/magneticpopup/dist/jquery.magnific-popup.js"></script>
-<script src = "scripts/magneticpopup/dist/jquery.magnific-popup.min.js"></script>
 <script>
-$(document).ready(function() {
+function derfunction(val){
+	var $spanimgid =  val;
+	console.log($spanimgid);
+	$.ajax({
+		type: 'POST',
+		url: 'getmax.php',
+		data: {
+			spanimgid: $spanimgid
+		},
+		success:function(returned){
+			console.log(returned);
+			alert(returned);
+		}
+	});
+	
+	
+
+}
+</script>
+<script>
+$(function() {
 
 	$('.box').magnificPopup({
 		type: 'ajax',
@@ -300,61 +345,20 @@ $(document).ready(function() {
       closeOnBgClick: false ,
 		overflowY: 'scroll'
 	});
-	
 });
+
 </script>
 <script>
 $(document).ready(function() {
 
-	$('.userbox').magnificPopup({
+	$('.books').magnificPopup({
 		type: 'ajax',
 		alignTop: true,
-		mainClass: 'mfp-fade',
-		removalDelay: 160,
-		disableOn: 700,
-      closeOnBgClick: false ,
-		overflowY: 'scroll'
+		
 	});
 	
 });
-</script>
-
-<script>
-$(function(){
-	$('#search1').keydown(function(){
-		var $x = $('#search1').val();
-		console.log($x);
-		$.ajax({
-			type: 'POST',
-			url: 'searchsql.php',
-			data: {
-				name: $x
-			},
-			success: function(data){
-				$('#searchtarget').html(data);
-			}
-		});
-	});
-});
-</script>
-<script type='text/javascript'>
-$.fn.stars = function() {
-    return $(this).each(function() {
-        // Get the value
-        var val = parseFloat($(this).html());
-        // Make sure that the value is in 0 - 5 range, multiply to get width
-        var size = Math.max(0, (Math.min(5, val))) * 16;
-        // Create stars holder
-        var $span = $('<span />').width(size);
-        // Replace the numerical value with stars
-        $(this).html($span);
-    });
-}
-$(function() {
-    $('span.stars').stars();
-});
-</script>
+</script> 
 
 </body>
 </html>
-
